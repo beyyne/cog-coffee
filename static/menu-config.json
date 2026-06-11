@@ -1,0 +1,54 @@
+{
+  "week_label": "Week of 5/4",
+
+  "roasters": [
+    { "name": "Sey Coffee", "location": "Brooklyn, NY", "url": "https://www.seycoffee.com/" },
+    { "name": "Hydrangea Coffee", "location": "Berkeley, CA", "url": "https://hydrangea.coffee/" }
+  ],
+
+  "pour_over": {
+    "name": "Gesha – Semi Washed",
+    "producer": "Rafael Velasco",
+    "origin": "Inza, Cauca, Colombia",
+    "elevation": "1,820 masl",
+    "process": "Semi-Washed",
+    "variety": "Gesha",
+    "tasting": "Lemongrass, Bergamot, Tropical Fruits",
+    "roaster": "Hydrangea Coffee",
+    "roasterLocation": "Berkeley, CA",
+    "roasterUrl": "https://hydrangea.coffee/"
+  },
+
+  "tea_supplier": {
+    "name": "Volition Tea",
+    "location": "Chicago, IL",
+    "url": "https://www.volitiontea.com/",
+    "description": "Single-origin, sustainably-grown teas sourced directly from small farmers in China and Việt Nam."
+  },
+
+  "menu": [
+    { "id": "coffee-001", "name": "Espresso", "description": "2oz. Rich, bold shot pulled from our house blend.", "category": "coffee" },
+    { "id": "coffee-002", "name": "Cortado", "description": "4oz. Equal parts espresso and steamed milk.", "category": "coffee" },
+    { "id": "coffee-003", "name": "Cappuccino", "description": "6oz. Steamed milk and foam over a double espresso.", "category": "coffee" },
+    { "id": "coffee-004", "name": "Latte", "description": "12oz. Smooth steamed milk with a double shot of espresso.", "category": "coffee" },
+    { "id": "coffee-005", "name": "Mocha", "description": "Espresso with steamed milk and house-made chocolate.", "category": "coffee" },
+    { "id": "coffee-006", "name": "Americano", "description": "Espresso with hot water. Bold and smooth.", "category": "coffee" },
+    { "id": "coffee-007", "name": "Drip Coffee", "description": "Freshly brewed drip coffee.", "category": "coffee" },
+    { "id": "matcha-001", "name": "Matcha Latte", "description": "Chinese matcha from Volition Tea, Chicago. Whisked with steamed milk.", "category": "matcha" },
+    { "id": "tea-001", "name": "Chai Latte", "description": "House-spiced chai with steamed milk. Available regular or spicy.", "category": "tea" },
+    { "id": "pour_over-001", "name": "Pour Over", "description": "Rotating single-origin, hand-poured. We rotate an international, local, and domestic roaster each month. Please allow 5 minutes.", "category": "pour_over" }
+  ],
+
+  "milks": [
+    { "id": "milk-oat", "name": "Oat Milk" },
+    { "id": "milk-coconut", "name": "Coconut Milk" },
+    { "id": "milk-almond", "name": "Almond Milk" }
+  ],
+
+  "categories": [
+    { "id": "coffee", "name": "Coffee" },
+    { "id": "matcha", "name": "Matcha" },
+    { "id": "tea", "name": "Tea" },
+    { "id": "pour_over", "name": "Pour Over" }
+  ]
+}

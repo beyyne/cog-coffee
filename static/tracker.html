@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drink Tracker — Cognition Coffee Bar</title>
+  <link rel="icon" href="devin-icon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Tracker" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f7f7f8;
+      --surface: #ffffff;
+      --primary: #0a0a0a;
+      --text: #0a0a0a;
+      --text-secondary: #6b6b6b;
+      --border: #e5e5e5;
+      --success: #21C19A;
+      --warning: #f59e0b;
+      --accent: #3969CA;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg); color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: var(--primary); color: #fff;
+      padding: 16px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .header h1 { font-size: 1.15rem; font-weight: 600; }
+    .header .date { font-size: 0.8rem; opacity: 0.7; margin-top: 2px; }
+    .header-actions { display: flex; gap: 8px; }
+    .header-btn {
+      background: rgba(255,255,255,0.15); color: #fff;
+      border: none; padding: 8px 14px; border-radius: 8px;
+      font-size: 0.8rem; font-weight: 500; cursor: pointer;
+    }
+    .header-btn:hover { background: rgba(255,255,255,0.25); }
+    .header-btn.active { background: rgba(255,255,255,0.3); }
+
+    /* ── Nav bar ── */
+    .nav-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex; gap: 0; overflow-x: auto;
+    }
+    .nav-bar a {
+      flex: 1; text-align: center;
+      padding: 12px 16px;
+      font-size: 0.8rem; font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+    }
+    .nav-bar a:hover { color: var(--text); }
+    .nav-bar a.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* ── Views ── */
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* ── Tap Grid ── */
+    .tap-section { padding: 16px; }
+    .tap-section h3 {
+      font-size: 0.7rem; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--text-secondary);
+      margin-bottom: 10px; padding-left: 4px;
+    }
+    .tap-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .tap-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      position: relative;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .tap-btn:active {
+      transform: scale(0.95);
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .tap-btn .drink-name {
+      font-weight: 600; font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    .tap-btn .drink-count {
+      font-size: 1.4rem; font-weight: 700;
+      color: var(--accent);
+    }
+    .tap-btn:active .drink-count { color: #fff; }
+    .tap-btn .drink-last {
+      font-size: 0.7rem; color: var(--text-secondary);
+      margin-top: 4px;
+    }
+    .tap-btn:active .drink-last { color: rgba(255,255,255,0.7); }
+
+    .tap-flash {
+      animation: tapPulse 0.3s ease;
+    }
+    @keyframes tapPulse {
+      0% { box-shadow: 0 0 0 0 rgba(57,105,202,0.4); }
+      100% { box-shadow: 0 0 0 12px rgba(57,105,202,0); }
+    }
+
+    /* ── Today Summary ── */
+    .summary-bar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin: 16px;
+      display: flex; align-items: center; justify-content: space-around;
+      text-align: center;
+    }
+    .summary-stat .stat-value {
+      font-size: 1.8rem; font-weight: 700; color: var(--primary);
+    }
+    .summary-stat .stat-label {
+      font-size: 0.7rem; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    /* ── Hourly Chart ── */
+    .chart-section {
+      padding: 16px;
+    }
+    .chart-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+    .chart-card h3 {
+      font-size: 0.85rem; font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .chart-bars {
+      display: flex; align-items: flex-end; gap: 4px;
+      height: 140px;
+    }
+    .chart-bar-wrap {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; height: 100%;
+      justify-content: flex-end;
+    }
+    .chart-bar {
+      width: 100%; min-height: 2px;
+      background: var(--accent);
+      border-radius: 3px 3px 0 0;
+      transition: height 0.3s ease;
+      position: relative;
+    }
+    .chart-bar-count {
+      font-size: 0.65rem; font-weight: 600;
+      color: var(--text); margin-bottom: 2px;
+      min-height: 14px;
+    }
+    .chart-bar-label {
+      font-size: 0.6rem; color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    /* ── Log List ── */
+    .log-section { padding: 16px; }
+    .log-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .log-card h3 {
+      font-size: 0.85rem; font-weight: 600;
+      padding: 16px 20px 12px;
+    }
+    .log-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 20px;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .log-item:nth-child(even) { background: var(--bg); }
+    .log-item .log-drink { font-weight: 500; }
+    .log-item .log-time { color: var(--text-secondary); font-size: 0.8rem; }
+    .log-item .log-undo {
+      color: var(--text-secondary); font-size: 0.75rem;
+      cursor: pointer; text-decoration: underline;
+    }
+    .log-item .log-undo:hover { color: #dc3545; }
+    .log-empty {
+      padding: 40px 20px; text-align: center;
+      color: var(--text-secondary); font-size: 0.9rem;
+    }
+
+    /* ── History view ── */
+    .history-section { padding: 16px; }
+    .history-day {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-bottom: 10px;
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer;
+    }
+    .history-day:hover { border-color: var(--accent); }
+    .history-day .day-label { font-weight: 600; font-size: 0.95rem; }
+    .history-day .day-count {
+      font-size: 1.1rem; font-weight: 700; color: var(--accent);
+    }
+    .history-day .day-peak {
+      font-size: 0.8rem; color: var(--text-secondary);
+    }
+
+    /* ── Milk Picker Modal ── */
+    .milk-picker-overlay {
+      position: fixed; inset: 0; z-index: 5000;
+      background: rgba(0,0,0,0.4);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.15s ease;
+    }
+    .milk-picker-overlay.open {
+      opacity: 1; pointer-events: auto;
+    }
+    .milk-picker {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 24px;
+      width: 320px; max-width: 90vw;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      transform: scale(0.95);
+      transition: transform 0.15s ease;
+    }
+    .milk-picker-overlay.open .milk-picker {
+      transform: scale(1);
+    }
+    .milk-picker h3 {
+      font-size: 1rem; font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .milk-picker .milk-picker-sub {
+      font-size: 0.8rem; color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+    .milk-picker-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .milk-pick-btn {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 8px;
+      text-align: center;
+      font-size: 0.85rem; font-weight: 500;
+      cursor: pointer;
+      transition: all 0.12s ease;
+      font-family: 'Inter', sans-serif;
+    }
+    .milk-pick-btn:active {
+      transform: scale(0.96);
+      background: var(--primary); color: #fff;
+      border-color: var(--primary);
+    }
+    .milk-pick-btn.no-milk {
+      grid-column: 1 / -1;
+      background: transparent;
+      border-style: dashed;
+      color: var(--text-secondary);
+      padding: 10px 8px;
+    }
+    .milk-pick-btn.no-milk:active {
+      background: var(--text-secondary); color: #fff;
+    }
+
+    @media (max-width: 480px) {
+      .tap-grid { grid-template-columns: repeat(2, 1fr); }
+      .summary-bar { flex-wrap: wrap; gap: 16px; }
+    }
+    /* ── PIN Lock ── */
+    .pin-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 16px;
+    }
+    .pin-overlay h2 { font-size: 1.2rem; font-weight: 600; }
+    .pin-overlay p { font-size: 0.85rem; color: var(--text-secondary); }
+    .pin-input {
+      font-size: 2rem; text-align: center; letter-spacing: 12px;
+      width: 180px; padding: 12px;
+      border: 2px solid var(--border); border-radius: var(--radius);
+      background: var(--surface); color: var(--text);
+      font-family: 'Inter', sans-serif;
+      -webkit-text-security: disc;
+    }
+    .pin-input:focus { outline: none; border-color: var(--primary); }
+    .pin-error { color: #e53e3e; font-size: 0.85rem; display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- PIN Lock Overlay -->
+  <div class="pin-overlay" id="pin-overlay">
+    <h2>Staff Access</h2>
+    <p>Enter PIN to continue</p>
+    <input type="tel" class="pin-input" id="pin-input" maxlength="4" autocomplete="off" inputmode="numeric" autofocus />
+    <div class="pin-error" id="pin-error">Incorrect PIN</div>
+  </div>
+
+  <!-- Nav bar connecting all apps -->
+  <div class="nav-bar">
+    <a href="index.html">Order</a>
+    <a href="orders.html">Orders</a>
+    <a href="tracker.html" class="active">Tracker</a>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <h1>Drink Tracker</h1>
+      <div class="date" id="header-date"></div>
+    </div>
+    <div class="header-actions">
+      <button class="header-btn" id="view-today-btn" onclick="switchView('today')">Today</button>
+      <button class="header-btn" id="view-history-btn" onclick="switchView('history')">History</button>
+    </div>
+  </div>
+
+  <!-- Today's summary bar -->
+  <div class="summary-bar" id="summary-bar">
+    <div class="summary-stat">
+      <div class="stat-value" id="stat-total">0</div>
+      <div class="stat-label">Today</div>
+    </div>
+    <div class="summary-stat">
+      <div class="stat-value" id="stat-peak-hour">—</div>
+      <div class="stat-label">Peak Hour</div>
+    </div>
+    <div class="summary-stat">
+      <div class="stat-value" id="stat-last">—</div>
+      <div class="stat-label">Last Drink</div>
+    </div>
+    <div class="summary-stat">
+      <div class="stat-value" id="stat-milk-total" style="color:var(--warning)">0</div>
+      <div class="stat-label">Milks</div>
+    </div>
+  </div>
+
+  <!-- TODAY VIEW -->
+  <div class="view active" id="view-today">
+
+    <!-- Tap buttons -->
+    <div class="tap-section" id="tap-section"></div>
+
+    <!-- Hourly chart -->
+    <div class="chart-section">
+      <div class="chart-card">
+        <h3>Drinks by Hour</h3>
+        <div class="chart-bars" id="hourly-chart"></div>
+      </div>
+    </div>
+
+    <!-- Recent log -->
+    <div class="log-section">
+      <div class="log-card">
+        <h3>Recent Activity</h3>
+        <div id="log-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTORY VIEW -->
+  <div class="view" id="view-history">
+    <div class="history-section" id="history-list"></div>
+  </div>
+
+  <!-- Drink Options Picker Modal -->
+  <div class="milk-picker-overlay" id="drink-options-overlay" onclick="closeOptionsPicker(event)">
+    <div class="milk-picker">
+      <h3 id="options-picker-title">Select Options</h3>
+      <div class="milk-picker-sub" id="options-picker-sub">Customize this drink</div>
+      <div id="options-decaf-row" style="display:none; margin-bottom:12px;">
+        <label style="display:flex;align-items:center;gap:8px;font-size:0.85rem;font-weight:500;cursor:pointer;">
+          <input type="checkbox" id="options-decaf-toggle" style="width:18px;height:18px;accent-color:var(--primary);" />
+          Decaf
+        </label>
+      </div>
+      <div id="options-chai-row" style="display:none; margin-bottom:12px;">
+        <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-secondary);margin-bottom:6px;">Style</div>
+        <div style="display:flex;gap:8px;">
+          <button class="milk-pick-btn" id="chai-regular-btn" onclick="selectChaiStyle('Regular')" style="flex:1">Regular</button>
+          <button class="milk-pick-btn" id="chai-spicy-btn" onclick="selectChaiStyle('Spicy')" style="flex:1">Spicy</button>
+        </div>
+      </div>
+      <div id="options-milk-section" style="display:none;">
+        <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-secondary);margin-bottom:6px;">Milk</div>
+        <div class="milk-picker-grid" id="options-milk-grid"></div>
+      </div>
+      <div id="options-confirm-section" style="display:none; margin-top:12px;">
+        <button class="milk-pick-btn" onclick="confirmDrinkOptions()" style="width:100%;background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600;">Log Drink</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // Use clean origin (strips any embedded credentials from tunnel URLs)
+  const API_BASE = window.location.protocol + '//' + window.location.host;
+
+  const MILK_OPTIONS = ['Oat', 'Whole', '2%', 'Coconut', 'Pistachio', 'Almond'];
+  // Drinks that show milk picker
+  const MILK_DRINK_IDS = ['coffee-002','coffee-003','coffee-004','coffee-005','coffee-006','matcha-001','tea-001'];
+  // Drinks that show decaf option
+  const DECAF_DRINK_IDS = ['coffee-001','coffee-002','coffee-003','coffee-004','coffee-006'];
+  // Drinks that show chai style
+  const CHAI_DRINK_IDS = ['tea-001'];
+  // Drinks that log directly (no options)
+  const DIRECT_LOG_IDS = ['coffee-007','pour_over-001'];
+
+  let menu = [];
+  let categories = [];
+  let milks = [];
+  let todayLogs = []; // cached from API
+  let currentView = 'today';
+  let pendingDrink = null;
+  let pendingChaiStyle = 'Regular';
+
+  // ── Init ──
+  async function init() {
+    // Load menu from API first, fallback to static file
+    try {
+      const res = await fetch(`${API_BASE}/api/menu-config`);
+      if (res.ok) {
+        const cfg = await res.json();
+        menu = cfg.menu || [];
+        categories = cfg.categories || [];
+        milks = cfg.milks || [];
+      }
+    } catch {}
+    if (!menu.length) {
+      try {
+        const res = await fetch('menu-config.json?v=' + Date.now());
+        if (res.ok) {
+          const cfg = await res.json();
+          menu = cfg.menu || [];
+          categories = cfg.categories || [];
+          milks = cfg.milks || [];
+        }
+      } catch {}
+    }
+    if (!menu.length) {
+      menu = [
+        { id: 'coffee-001', name: 'Espresso', category: 'coffee' },
+        { id: 'coffee-002', name: 'Cortado', category: 'coffee' },
+        { id: 'coffee-003', name: 'Cappuccino', category: 'coffee' },
+        { id: 'coffee-004', name: 'Latte', category: 'coffee' },
+        { id: 'coffee-005', name: 'Mocha', category: 'coffee' },
+        { id: 'coffee-006', name: 'Americano', category: 'coffee' },
+        { id: 'coffee-007', name: 'Drip Coffee', category: 'coffee' },
+        { id: 'matcha-001', name: 'Matcha Latte', category: 'matcha' },
+        { id: 'tea-001', name: 'Chai Latte', category: 'tea' },
+        { id: 'pour_over-001', name: 'Pour Over', category: 'pour_over' },
+      ];
+    }
+    if (!milks.length) {
+      milks = [
+        { id: 'milk-oat', name: 'Oat Milk' },
+        { id: 'milk-coconut', name: 'Coconut Milk' },
+        { id: 'milk-almond', name: 'Almond Milk' },
+      ];
+    }
+    document.getElementById('header-date').textContent = new Date().toLocaleDateString('en-US', {
+      weekday: 'long', month: 'long', day: 'numeric'
+    });
+    renderTapGrid();
+    renderMilkGrid();
+    refreshAll();
+    // Auto-refresh every 15s to pick up cross-device changes
+    setInterval(refreshAll, 15000);
+  }
+
+  function todayKey() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  }
+
+  // ── Drink Options Picker ──
+  function renderMilkGrid() {
+    const grid = document.getElementById('options-milk-grid');
+    let html = MILK_OPTIONS.map(m =>
+      `<button class="milk-pick-btn" onclick="confirmWithMilk('${m}')">${m}</button>`
+    ).join('');
+    html += `<button class="milk-pick-btn no-milk" onclick="confirmWithMilk(null)">No Milk / Default</button>`;
+    grid.innerHTML = html;
+  }
+
+  function openOptionsPicker(drinkId, drinkName) {
+    pendingDrink = { id: drinkId, name: drinkName };
+    pendingChaiStyle = 'Regular';
+    document.getElementById('options-picker-title').textContent = drinkName;
+
+    const showDecaf = DECAF_DRINK_IDS.includes(drinkId);
+    const showMilk = MILK_DRINK_IDS.includes(drinkId);
+    const showChai = CHAI_DRINK_IDS.includes(drinkId);
+
+    document.getElementById('options-decaf-row').style.display = showDecaf ? '' : 'none';
+    document.getElementById('options-decaf-toggle').checked = false;
+    document.getElementById('options-chai-row').style.display = showChai ? '' : 'none';
+    document.getElementById('options-milk-section').style.display = showMilk ? '' : 'none';
+    // Show confirm button only for drinks with no milk picker (e.g. espresso with just decaf)
+    document.getElementById('options-confirm-section').style.display = !showMilk ? '' : 'none';
+
+    if (showChai) {
+      document.getElementById('chai-regular-btn').style.background = 'var(--primary)';
+      document.getElementById('chai-regular-btn').style.color = '#fff';
+      document.getElementById('chai-spicy-btn').style.background = '';
+      document.getElementById('chai-spicy-btn').style.color = '';
+    }
+
+    document.getElementById('options-picker-sub').textContent = showMilk ? 'Pick milk for this drink' : 'Options';
+    document.getElementById('drink-options-overlay').classList.add('open');
+  }
+
+  function closeOptionsPicker(e) {
+    if (e && e.target !== e.currentTarget) return;
+    document.getElementById('drink-options-overlay').classList.remove('open');
+    pendingDrink = null;
+  }
+
+  function selectChaiStyle(style) {
+    pendingChaiStyle = style;
+    const regBtn = document.getElementById('chai-regular-btn');
+    const spicyBtn = document.getElementById('chai-spicy-btn');
+    if (style === 'Regular') {
+      regBtn.style.background = 'var(--primary)'; regBtn.style.color = '#fff';
+      spicyBtn.style.background = ''; spicyBtn.style.color = '';
+    } else {
+      spicyBtn.style.background = 'var(--primary)'; spicyBtn.style.color = '#fff';
+      regBtn.style.background = ''; regBtn.style.color = '';
+    }
+  }
+
+  function confirmWithMilk(milk) {
+    if (!pendingDrink) return;
+    const isDecaf = document.getElementById('options-decaf-toggle').checked;
+    const isChai = CHAI_DRINK_IDS.includes(pendingDrink.id);
+    logDrink(pendingDrink.id, pendingDrink.name, milk, isDecaf, isChai ? pendingChaiStyle : null);
+    document.getElementById('drink-options-overlay').classList.remove('open');
+    pendingDrink = null;
+  }
+
+  function confirmDrinkOptions() {
+    if (!pendingDrink) return;
+    const isDecaf = document.getElementById('options-decaf-toggle').checked;
+    logDrink(pendingDrink.id, pendingDrink.name, null, isDecaf, null);
+    document.getElementById('drink-options-overlay').classList.remove('open');
+    pendingDrink = null;
+  }
+
+  // ── Tap a drink ──
+  function tapDrink(drinkId, drinkName) {
+    if (DIRECT_LOG_IDS.includes(drinkId)) {
+      logDrink(drinkId, drinkName, null, false, null);
+    } else {
+      openOptionsPicker(drinkId, drinkName);
+    }
+  }
+
+  async function logDrink(drinkId, drinkName, milk, decaf, chaiStyle) {
+    // Visual feedback immediately
+    const btn = document.querySelector(`[data-drink="${drinkId}"]`);
+    if (btn) {
+      btn.classList.remove('tap-flash');
+      void btn.offsetWidth;
+      btn.classList.add('tap-flash');
+    }
+
+    try {
+      const res = await fetch(`${API_BASE}/api/drinks`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          drink_id: drinkId,
+          drink_name: drinkName,
+          milk: milk || null,
+          decaf: decaf || false,
+          chai_style: chaiStyle || null,
+          source: 'manual',
+        }),
+      });
+      if (!res.ok) throw new Error('Failed to log drink');
+    } catch (err) {
+      console.error('Error logging drink:', err);
+    }
+    refreshAll();
+  }
+
+  async function undoLog(entryId) {
+    try {
+      const res = await fetch(`${API_BASE}/api/drinks/${entryId}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error('Failed to undo');
+    } catch (err) {
+      console.error('Error undoing drink:', err);
+    }
+    refreshAll();
+  }
+
+  // ── Render tap grid ──
+  function renderTapGrid() {
+    const section = document.getElementById('tap-section');
+    const grouped = {};
+    const catNames = {};
+    categories.forEach(c => catNames[c.id] = c.name);
+
+    menu.forEach(item => {
+      const cat = item.category;
+      if (!grouped[cat]) grouped[cat] = [];
+      grouped[cat].push(item);
+    });
+
+    let html = '';
+    for (const catId of Object.keys(grouped)) {
+      const catLabel = catNames[catId] || catId;
+      html += `<h3>${catLabel}</h3><div class="tap-grid">`;
+      grouped[catId].forEach(item => {
+        html += `
+          <div class="tap-btn" data-drink="${item.id}" onclick="tapDrink('${item.id}', '${item.name.replace(/'/g, "\\'")}')">
+            <div class="drink-name">${item.name}</div>
+            <div class="drink-count" id="count-${item.id}">0</div>
+            <div class="drink-last" id="last-${item.id}"></div>
+          </div>`;
+      });
+      html += '</div>';
+    }
+    section.innerHTML = html;
+  }
+
+
+  // ── Refresh everything ──
+  async function refreshAll() {
+    try {
+      const date = todayKey();
+      const res = await fetch(`${API_BASE}/api/drinks?date=${date}`);
+      if (res.ok) {
+        todayLogs = await res.json();
+        // API returns DESC, reverse for chronological order
+        todayLogs.reverse();
+      }
+    } catch (err) {
+      console.error('Error fetching drinks:', err);
+    }
+    updateCounts(todayLogs);
+    updateSummary(todayLogs);
+    updateHourlyChart(todayLogs);
+    updateLogList(todayLogs);
+    if (currentView === 'history') renderHistory();
+  }
+
+  function updateCounts(todayLogs) {
+    const counts = {};
+    const lastTimes = {};
+    todayLogs.forEach(l => {
+      counts[l.drink_id] = (counts[l.drink_id] || 0) + 1;
+      lastTimes[l.drink_id] = l.timestamp;
+    });
+    menu.forEach(item => {
+      const countEl = document.getElementById(`count-${item.id}`);
+      const lastEl = document.getElementById(`last-${item.id}`);
+      if (countEl) countEl.textContent = counts[item.id] || 0;
+      if (lastEl) {
+        if (lastTimes[item.id]) {
+          const t = new Date(lastTimes[item.id]);
+          lastEl.textContent = t.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+        } else {
+          lastEl.textContent = '';
+        }
+      }
+    });
+  }
+
+  function updateSummary(todayLogs) {
+    document.getElementById('stat-total').textContent = todayLogs.length;
+
+    // Peak hour
+    const hourCounts = {};
+    todayLogs.forEach(l => {
+      hourCounts[l.hour] = (hourCounts[l.hour] || 0) + 1;
+    });
+    let peakHour = null, peakCount = 0;
+    for (const [h, c] of Object.entries(hourCounts)) {
+      if (c > peakCount) { peakHour = parseInt(h); peakCount = c; }
+    }
+    if (peakHour !== null) {
+      const ampm = peakHour >= 12 ? 'PM' : 'AM';
+      const hr = peakHour % 12 || 12;
+      document.getElementById('stat-peak-hour').textContent = `${hr}${ampm}`;
+    } else {
+      document.getElementById('stat-peak-hour').textContent = '—';
+    }
+
+    // Last drink
+    if (todayLogs.length) {
+      const last = todayLogs[todayLogs.length - 1];
+      document.getElementById('stat-last').textContent = last.drink_name;
+    } else {
+      document.getElementById('stat-last').textContent = '—';
+    }
+
+    // Milk total (from drink logs with milk)
+    const milkCount = todayLogs.filter(l => l.milk).length;
+    document.getElementById('stat-milk-total').textContent = milkCount;
+  }
+
+  function updateHourlyChart(todayLogs) {
+    // Show hours 6am to 8pm
+    const startHour = 6, endHour = 20;
+    const hourCounts = {};
+    todayLogs.forEach(l => {
+      hourCounts[l.hour] = (hourCounts[l.hour] || 0) + 1;
+    });
+    const maxCount = Math.max(1, ...Object.values(hourCounts));
+
+    let html = '';
+    for (let h = startHour; h <= endHour; h++) {
+      const count = hourCounts[h] || 0;
+      const pct = (count / maxCount) * 100;
+      const ampm = h >= 12 ? 'p' : 'a';
+      const hr = h % 12 || 12;
+      const isNow = new Date().getHours() === h;
+      const barColor = isNow ? 'var(--success)' : 'var(--accent)';
+      html += `
+        <div class="chart-bar-wrap">
+          <div class="chart-bar-count">${count || ''}</div>
+          <div class="chart-bar" style="height:${Math.max(pct, 2)}%;background:${barColor}"></div>
+          <div class="chart-bar-label">${hr}${ampm}</div>
+        </div>`;
+    }
+    document.getElementById('hourly-chart').innerHTML = html;
+  }
+
+  function updateLogList(todayLogs) {
+    const container = document.getElementById('log-list');
+    const sorted = [...todayLogs].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).slice(0, 40);
+
+    if (!sorted.length) {
+      container.innerHTML = '<div class="log-empty">No drinks logged yet today. Tap a drink above to start tracking.</div>';
+      return;
+    }
+    container.innerHTML = sorted.map(l => {
+      const t = new Date(l.timestamp);
+      const time = t.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+      let display = l.drink_name;
+      const parts = [];
+      if (l.decaf) parts.push('Decaf');
+      if (l.chai_style) parts.push(l.chai_style);
+      if (l.milk) parts.push(l.milk + ' Milk');
+      if (parts.length) display += ' — ' + parts.join(', ');
+      return `
+        <div class="log-item">
+          <span class="log-drink">${display}</span>
+          <span class="log-time">${time}</span>
+          <span class="log-undo" onclick="undoLog('${l.id}')">undo</span>
+        </div>`;
+    }).join('');
+  }
+
+  // ── History view ──
+  async function renderHistory() {
+    const container = document.getElementById('history-list');
+    try {
+      const res = await fetch(`${API_BASE}/api/drinks/history`);
+      if (!res.ok) throw new Error('Failed to fetch history');
+      const history = await res.json();
+      if (!history.length) {
+        container.innerHTML = '<div class="log-empty" style="padding:60px 20px">No history yet. Start logging drinks to see daily summaries here.</div>';
+        return;
+      }
+      container.innerHTML = history.map(day => {
+        const d = new Date(day.date + 'T12:00:00');
+        const label = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+        let peakLabel = '';
+        if (day.peak_hour !== null && day.peak_hour !== undefined) {
+          const ampm = day.peak_hour >= 12 ? 'PM' : 'AM';
+          const hr = day.peak_hour % 12 || 12;
+          peakLabel = `Peak: ${hr}${ampm} (${day.peak_count} drinks)`;
+        }
+        return `
+          <div class="history-day">
+            <div>
+              <div class="day-label">${label}</div>
+              <div class="day-peak">${peakLabel}</div>
+            </div>
+            <div class="day-count">${day.total} drinks</div>
+          </div>`;
+      }).join('');
+    } catch (err) {
+      console.error('Error fetching history:', err);
+      container.innerHTML = '<div class="log-empty" style="padding:60px 20px">Unable to load history.</div>';
+    }
+  }
+
+  // ── View switching ──
+  function switchView(view) {
+    currentView = view;
+    document.getElementById('view-today').classList.toggle('active', view === 'today');
+    document.getElementById('view-history').classList.toggle('active', view === 'history');
+    document.getElementById('summary-bar').style.display = view === 'today' ? '' : 'none';
+    document.getElementById('view-today-btn').classList.toggle('active', view === 'today');
+    document.getElementById('view-history-btn').classList.toggle('active', view === 'history');
+    if (view === 'history') renderHistory();
+  }
+
+  // ── PIN Lock ──
+  const STAFF_PIN = '5503';
+  const PIN_KEY = 'cognition_staff_unlocked';
+
+  function checkPinAccess() {
+    const unlocked = sessionStorage.getItem(PIN_KEY);
+    if (unlocked === 'true') {
+      document.getElementById('pin-overlay').style.display = 'none';
+      return;
+    }
+    const pinInput = document.getElementById('pin-input');
+    pinInput.addEventListener('input', function() {
+      document.getElementById('pin-error').style.display = 'none';
+      if (this.value.length === 4) {
+        if (this.value === STAFF_PIN) {
+          sessionStorage.setItem(PIN_KEY, 'true');
+          document.getElementById('pin-overlay').style.display = 'none';
+        } else {
+          document.getElementById('pin-error').style.display = 'block';
+          this.value = '';
+        }
+      }
+    });
+  }
+
+  checkPinAccess();
+  init();
+</script>
+</body>
+</html>

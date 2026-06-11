@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cognition Coffee Bar</title>
+  <link rel="icon" href="devin-icon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Coffee Bar" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ─── Navigation ─────────────────────────────────────── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo" onclick="showSection('hero')">
+        <svg viewBox="0 0 44 50" height="24" fill="currentColor">
+          <path d="M1.117,20.553l5.351,3.089c0.192,0.111,0.406,0.165,0.621,0.165c0.214,0,0.429-0.057,0.621-0.165l5.351-3.089c0,0,0.015-0.012,0.022-0.017c0.081-0.049,0.158-0.108,0.227-0.175c0.01-0.01,0.02-0.022,0.03-0.032c0.059-0.064,0.113-0.133,0.158-0.207c0.007-0.012,0.017-0.022,0.022-0.035c0.047-0.081,0.081-0.167,0.108-0.259c0.005-0.02,0.01-0.039,0.015-0.059c0.022-0.094,0.039-0.19,0.039-0.291v-3.089c0-1.192,0.643-2.303,1.675-2.9s2.316-0.596,3.35,0l2.675,1.545c0.086,0.049,0.177,0.084,0.271,0.111c0.02,0.005,0.04,0.012,0.059,0.017c0.091,0.022,0.185,0.035,0.278,0.037c0.005,0,0.01,0,0.012,0c0.01,0,0.02-0.005,0.029-0.005c0.086,0,0.173-0.012,0.256-0.035c0.015-0.003,0.03-0.005,0.044-0.01c0.091-0.025,0.18-0.062,0.264-0.108c0.007-0.005,0.017-0.005,0.025-0.01l5.351-3.089c0.384-0.222,0.621-0.631,0.621-1.074V4.69c0-0.443-0.236-0.852-0.621-1.074l-5.356-3.087c-0.384-0.222-0.855-0.222-1.239,0l-5.351,3.089c0,0-0.015,0.012-0.022,0.017c-0.081,0.049-0.158,0.108-0.227,0.175c-0.01,0.01-0.02,0.022-0.03,0.032c-0.059,0.064-0.113,0.133-0.158,0.207c-0.007,0.012-0.017,0.022-0.022,0.034c-0.047,0.081-0.081,0.168-0.108,0.259c-0.005,0.02-0.01,0.039-0.015,0.059c-0.022,0.094-0.039,0.19-0.039,0.291v3.089c0,1.192-0.643,2.303-1.675,2.902c-1.032,0.596-2.316,0.596-3.35,0L7.705,9.139C7.618,9.09,7.527,9.055,7.434,9.028c-0.02-0.005-0.039-0.012-0.059-0.017C7.283,8.989,7.19,8.977,7.096,8.974c-0.015,0-0.027,0-0.042,0c-0.089,0-0.175,0.012-0.259,0.034c-0.015,0.002-0.027,0.005-0.042,0.01C6.663,9.043,6.574,9.08,6.49,9.127c-0.007,0.005-0.017,0.005-0.025,0.01l-5.348,3.092c-0.384,0.222-0.621,0.631-0.621,1.074v6.178c0,0.444,0.236,0.852,0.621,1.074V20.553z"/>
+          <path d="M30.262,22.097c1.032-0.596,2.316-0.596,3.35,0l2.675,1.545c0.086,0.049,0.177,0.084,0.271,0.111c0.02,0.005,0.039,0.012,0.059,0.017c0.091,0.022,0.185,0.034,0.278,0.037c0.005,0,0.01,0,0.012,0c0.01,0,0.02-0.003,0.029-0.005c0.086,0,0.173-0.012,0.256-0.034c0.015-0.003,0.03-0.005,0.044-0.01c0.091-0.025,0.177-0.062,0.264-0.108c0.007-0.005,0.017-0.005,0.027-0.01l5.351-3.089c0.384-0.222,0.621-0.631,0.621-1.074v-6.179c0-0.443-0.237-0.852-0.621-1.074L37.53,9.134c-0.384-0.222-0.855-0.222-1.239,0l-5.351,3.089c0,0-0.015,0.012-0.022,0.017c-0.081,0.049-0.158,0.108-0.227,0.175c-0.01,0.01-0.02,0.022-0.029,0.032c-0.059,0.064-0.113,0.133-0.158,0.207c-0.007,0.012-0.017,0.022-0.022,0.035c-0.047,0.081-0.081,0.168-0.108,0.259c-0.005,0.02-0.01,0.039-0.015,0.059c-0.022,0.094-0.039,0.19-0.039,0.291v3.089c0,1.192-0.643,2.303-1.675,2.902c-1.032,0.596-2.316,0.596-3.35,0l-2.675-1.545c-0.086-0.049-0.177-0.084-0.271-0.111c-0.02-0.005-0.039-0.012-0.059-0.017c-0.091-0.022-0.185-0.035-0.278-0.037c-0.015,0-0.027,0-0.042,0c-0.089,0-0.175,0.012-0.259,0.035c-0.015,0.003-0.027,0.005-0.042,0.01c-0.091,0.025-0.177,0.062-0.264,0.108c-0.007,0.005-0.015,0.005-0.022,0.01l-5.354,3.089c-0.384,0.222-0.621,0.631-0.621,1.074v6.178c0,0.444,0.237,0.852,0.621,1.074l5.356,3.089c0.384,0.222,0.855,0.222,1.239,0l5.351-3.089c0,0,0.015-0.012,0.022-0.017c0.081-0.049,0.158-0.108,0.227-0.175c0.01-0.01,0.02-0.022,0.029-0.032c0.059-0.064,0.113-0.133,0.158-0.207c0.007-0.012,0.017-0.022,0.022-0.035c0.047-0.081,0.081-0.167,0.108-0.259c0.005-0.02,0.01-0.039,0.015-0.059c0.022-0.094,0.039-0.19,0.039-0.291v-3.089C28.587,23.207,29.23,22.097,30.262,22.097z"/>
+          <path d="M14.351,35.473l-5.351-3.089c-0.384-0.222-0.855-0.222-1.239,0l-5.351,3.089c0,0-0.015,0.012-0.022,0.017c-0.081,0.049-0.158,0.108-0.227,0.175c-0.01,0.01-0.02,0.022-0.03,0.032c-0.059,0.064-0.113,0.133-0.158,0.207c-0.007,0.012-0.017,0.022-0.022,0.035c-0.047,0.081-0.081,0.167-0.108,0.259c-0.005,0.02-0.01,0.039-0.015,0.059C0.805,36.351,0.788,36.447,0.788,36.548v6.178c0,0.444,0.236,0.852,0.621,1.074l5.356,3.089c0.384,0.222,0.855,0.222,1.239,0l5.351-3.089c0,0,0.015-0.012,0.022-0.017c0.081-0.049,0.158-0.108,0.227-0.175c0.01-0.01,0.02-0.022,0.03-0.032c0.059-0.064,0.113-0.133,0.158-0.207c0.007-0.012,0.017-0.022,0.022-0.035c0.047-0.081,0.081-0.168,0.108-0.259c0.005-0.02,0.01-0.039,0.015-0.059c0.022-0.094,0.039-0.19,0.039-0.291v-3.089c0-1.192,0.643-2.303,1.675-2.9c1.032-0.599,2.316-0.599,3.35,0l2.675,1.545c0.086,0.049,0.177,0.084,0.271,0.111c0.02,0.005,0.04,0.012,0.059,0.017c0.091,0.022,0.185,0.035,0.278,0.037c0.005,0,0.01,0,0.012,0c0.01,0,0.02-0.005,0.029-0.005c0.086,0,0.173-0.012,0.256-0.035c0.015-0.003,0.03-0.005,0.044-0.01c0.091-0.025,0.18-0.062,0.264-0.108c0.007-0.005,0.017-0.005,0.025-0.01l5.351-3.089c0.384-0.222,0.621-0.631,0.621-1.074v-6.178c0-0.443-0.236-0.852-0.621-1.074l-5.356-3.089c-0.384-0.222-0.855-0.222-1.239,0l-5.351,3.089c0,0-0.015,0.012-0.022,0.017c-0.081,0.049-0.158,0.108-0.227,0.175c-0.01,0.01-0.02,0.022-0.03,0.032c-0.059,0.064-0.113,0.133-0.158,0.207c-0.007,0.012-0.017,0.022-0.022,0.034c-0.047,0.081-0.081,0.168-0.108,0.259c-0.005,0.02-0.01,0.039-0.015,0.059c-0.022,0.094-0.039,0.19-0.039,0.291v3.089c0,1.192-0.643,2.303-1.675,2.902C16.667,36.073,15.383,36.073,14.351,35.473z"/>
+        </svg>
+        <span>Cognition Coffee</span>
+      </a>
+      <div class="nav-links">
+        <a href="#" onclick="showSection('hero')">Home</a>
+        <a href="#" onclick="showSection('menu')">Menu</a>
+        <a href="#" onclick="showSection('about')">About</a>
+        <a href="#" class="nav-cart" onclick="showSection('cart')">
+          Cart <span class="cart-badge" id="cart-badge">0</span>
+        </a>
+        <a href="orders.html" style="opacity:0;font-size:0;width:0;overflow:hidden;pointer-events:auto" aria-hidden="true">.</a>
+      </div>
+      <button class="nav-toggle" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#" onclick="showSection('hero'); toggleMobileMenu()">Home</a>
+      <a href="#" onclick="showSection('menu'); toggleMobileMenu()">Menu</a>
+      <a href="#" onclick="showSection('about'); toggleMobileMenu()">About</a>
+      <a href="#" onclick="showSection('cart'); toggleMobileMenu()">Cart (<span id="cart-badge-mobile">0</span>)</a>
+    </div>
+  </nav>
+
+  <!-- ─── Hero Section ───────────────────────────────────── -->
+  <section class="section hero-section" id="section-hero">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-content">
+      <div class="hero-logo">
+        <svg viewBox="0 0 44 50" height="48" fill="currentColor">
+          <path d="M1.117,20.553l5.351,3.089c0.192,0.111,0.406,0.165,0.621,0.165c0.214,0,0.429-0.057,0.621-0.165l5.351-3.089c0,0,0.015-0.012,0.022-0.017c0.081-0.049,0.158-0.108,0.227-0.175c0.01-0.01,0.02-0.022,0.03-0.032c0.059-0.064,0.113-0.133,0.158-0.207c0.007-0.012,0.017-0.022,0.022-0.035c0.047-0.081,0.081-0.167,0.108-0.259c0.005-0.02,0.01-0.039,0.015-0.059c0.022-0.094,0.039-0.19,0.039-0.291v-3.089c0-1.192,0.643-2.303,1.675-2.9s2.316-0.596,3.35,0l2.675,1.545c0.086,0.049,0.177,0.084,0.271,0.111c0.02,0.005,0.04,0.012,0.059,0.017c0.091,0.022,0.185,0.035,0.278,0.037c0.005,0,0.01,0,0.012,0c0.01,0,0.02-0.005,0.029-0.005c0.086,0,0.173-0.012,0.256-0.035c0.015-0.003,0.03-0.005,0.044-0.01c0.091-0.025,0.18-0.062,0.264-0.108c0.007-0.005,0.017-0.005,0.025-0.01l5.351-3.089c0.384-0.222,0.621-0.631,0.621-1.074V4.69c0-0.443-0.236-0.852-0.621-1.074l-5.356-3.087c-0.384-0.222-0.855-0.222-1.239,0l-5.351,3.089c0,0-0.015,0.012-0.022,0.017c-0.081,0.049-0.158,0.108-0.227,0.175c-0.01,0.01-0.02,0.022-0.03,0.032c-0.059,0.064-0.113,0.133-0.158,0.207c-0.007,0.012-0.017,0.022-0.022,0.034c-0.047,0.081-0.081,0.168-0.108,0.259c-0.005,0.02-0.01,0.039-0.015,0.059c-0.022,0.094-0.039,0.19-0.039,0.291v3.089c0,1.192-0.643,2.303-1.675,2.902c-1.032,0.596-2.316,0.596-3.35,0L7.705,9.139C7.618,9.09,7.527,9.055,7.434,9.028c-0.02-0.005-0.039-0.012-0.059-0.017C7.283,8.989,7.19,8.977,7.096,8.974c-0.015,0-0.027,0-0.042,0c-0.089,0-0.175,0.012-0.259,0.034c-0.015,0.002-0.027,0.005-0.042,0.01C6.663,9.043,6.574,9.08,6.49,9.127c-0.007,0.005-0.017,0.005-0.025,0.01l-5.348,3.092c-0.384,0.222-0.621,0.631-0.621,1.074v6.178c0,0.444,0.236,0.852,0.621,1.074V20.553z"/>
+          <path d="M30.262,22.097c1.032-0.596,2.316-0.596,3.35,0l2.675,1.545c0.086,0.049,0.177,0.084,0.271,0.111c0.02,0.005,0.039,0.012,0.059,0.017c0.091,0.022,0.185,0.034,0.278,0.037c0.005,0,0.01,0,0.012,0c0.01,0,0.02-0.003,0.029-0.005c0.086,0,0.173-0.012,0.256-0.034c0.015-0.003,0.03-0.005,0.044-0.01c0.091-0.025,0.177-0.062,0.264-0.108c0.007-0.005,0.017-0.005,0.027-0.01l5.351-3.089c0.384-0.222,0.621-0.631,0.621-1.074v-6.179c0-0.443-0.237-0.852-0.621-1.074L37.53,9.134c-0.384-0.222-0.855-0.222-1.239,0l-5.351,3.089c0,0-0.015,0.012-0.022,0.017c-0.081,0.049-0.158,0.108-0.227,0.175c-0.01,0.01-0.02,0.022-0.029,0.032c-0.059,0.064-0.113,0.133-0.158,0.207c-0.007,0.012-0.017,0.022-0.022,0.035c-0.047,0.081-0.081,0.168-0.108,0.259c-0.005,0.02-0.01,0.039-0.015,0.059c-0.022,0.094-0.039,0.19-0.039,0.291v3.089c0,1.192-0.643,2.303-1.675,2.902c-1.032,0.596-2.316,0.596-3.35,0l-2.675-1.545c-0.086-0.049-0.177-0.084-0.271-0.111c-0.02-0.005-0.039-0.012-0.059-0.017c-0.091-0.022-0.185-0.035-0.278-0.037c-0.015,0-0.027,0-0.042,0c-0.089,0-0.175,0.012-0.259,0.035c-0.015,0.003-0.027,0.005-0.042,0.01c-0.091,0.025-0.177,0.062-0.264,0.108c-0.007,0.005-0.015,0.005-0.022,0.01l-5.354,3.089c-0.384,0.222-0.621,0.631-0.621,1.074v6.178c0,0.444,0.237,0.852,0.621,1.074l5.356,3.089c0.384,0.222,0.855,0.222,1.239,0l5.351-3.089c0,0,0.015-0.012,0.022-0.017c0.081-0.049,0.158-0.108,0.227-0.175c0.01-0.01,0.02-0.022,0.029-0.032c0.059-0.064,0.113-0.133,0.158-0.207c0.007-0.012,0.017-0.022,0.022-0.035c0.047-0.081,0.081-0.167,0.108-0.259c0.005-0.02,0.01-0.039,0.015-0.059c0.022-0.094,0.039-0.19,0.039-0.291v-3.089C28.587,23.207,29.23,22.097,30.262,22.097z"/>
+          <path d="M14.351,35.473l-5.351-3.089c-0.384-0.222-0.855-0.222-1.239,0l-5.351,3.089c0,0-0.015,0.012-0.022,0.017c-0.081,0.049-0.158,0.108-0.227,0.175c-0.01,0.01-0.02,0.022-0.03,0.032c-0.059,0.064-0.113,0.133-0.158,0.207c-0.007,0.012-0.017,0.022-0.022,0.035c-0.047,0.081-0.081,0.167-0.108,0.259c-0.005,0.02-0.01,0.039-0.015,0.059C0.805,36.351,0.788,36.447,0.788,36.548v6.178c0,0.444,0.236,0.852,0.621,1.074l5.356,3.089c0.384,0.222,0.855,0.222,1.239,0l5.351-3.089c0,0,0.015-0.012,0.022-0.017c0.081-0.049,0.158-0.108,0.227-0.175c0.01-0.01,0.02-0.022,0.03-0.032c0.059-0.064,0.113-0.133,0.158-0.207c0.007-0.012,0.017-0.022,0.022-0.035c0.047-0.081,0.081-0.168,0.108-0.259c0.005-0.02,0.01-0.039,0.015-0.059c0.022-0.094,0.039-0.19,0.039-0.291v-3.089c0-1.192,0.643-2.303,1.675-2.9c1.032-0.599,2.316-0.599,3.35,0l2.675,1.545c0.086,0.049,0.177,0.084,0.271,0.111c0.02,0.005,0.04,0.012,0.059,0.017c0.091,0.022,0.185,0.035,0.278,0.037c0.005,0,0.01,0,0.012,0c0.01,0,0.02-0.005,0.029-0.005c0.086,0,0.173-0.012,0.256-0.035c0.015-0.003,0.03-0.005,0.044-0.01c0.091-0.025,0.18-0.062,0.264-0.108c0.007-0.005,0.017-0.005,0.025-0.01l5.351-3.089c0.384-0.222,0.621-0.631,0.621-1.074v-6.178c0-0.443-0.236-0.852-0.621-1.074l-5.356-3.089c-0.384-0.222-0.855-0.222-1.239,0l-5.351,3.089c0,0-0.015,0.012-0.022,0.017c-0.081,0.049-0.158,0.108-0.227,0.175c-0.01,0.01-0.02,0.022-0.03,0.032c-0.059,0.064-0.113,0.133-0.158,0.207c-0.007,0.012-0.017,0.022-0.022,0.034c-0.047,0.081-0.081,0.168-0.108,0.259c-0.005,0.02-0.01,0.039-0.015,0.059c-0.022,0.094-0.039,0.19-0.039,0.291v3.089c0,1.192-0.643,2.303-1.675,2.902C16.667,36.073,15.383,36.073,14.351,35.473z"/>
+        </svg>
+      </div>
+      <h1 class="hero-title">Cognition<br/>Coffee Bar</h1>
+      <p class="hero-subtitle">Order ahead. Get back to building.</p>
+      <div class="hero-actions">
+        <button class="btn-hero-primary" onclick="showSection('menu')">Order Now</button>
+        <button class="btn-hero-secondary" onclick="showSection('about')">Learn More</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Menu Section ───────────────────────────────────── -->
+  <section class="section menu-section" id="section-menu" style="display:none">
+    <div class="container">
+      <h2 class="section-title">Our Menu</h2>
+      <div class="category-tabs" id="category-tabs"></div>
+      <div class="menu-grid" id="menu-grid"></div>
+    </div>
+  </section>
+
+  <!-- ─── Item Modal ─────────────────────────────────────── -->
+  <div class="modal-overlay" id="item-modal" style="display:none">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div class="modal-body">
+        <h3 class="modal-title" id="modal-title"></h3>
+        <p class="modal-desc" id="modal-desc"></p>
+
+        <!-- Pour over details (pour over only) -->
+        <div id="modal-pour-over-details" style="display:none"></div>
+
+        <!-- Decaf toggle (coffee drinks only) -->
+        <div class="modal-option" id="modal-decaf" style="display:none">
+          <label class="toggle-label">
+            <input type="checkbox" id="decaf-toggle" />
+            <span>Decaf</span>
+          </label>
+        </div>
+
+        <!-- Chai style (chai only) -->
+        <div class="modal-option" id="modal-chai-style" style="display:none">
+          <label>Style</label>
+          <div class="option-pills" id="chai-style-pills"></div>
+        </div>
+
+        <!-- Milk choice -->
+        <div class="modal-option" id="modal-milk" style="display:none">
+          <label>Milk</label>
+          <div class="option-pills" id="milk-pills"></div>
+        </div>
+
+        <!-- Syrup -->
+        <div class="modal-option" id="modal-syrup" style="display:none">
+          <label>Add Syrup</label>
+          <div class="option-pills" id="syrup-pills"></div>
+        </div>
+
+        <div class="modal-qty">
+          <label>Quantity</label>
+          <div class="qty-control">
+            <button onclick="changeQty(-1)">−</button>
+            <span id="modal-qty-val">1</span>
+            <button onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+        <div class="modal-instructions">
+          <label for="special-instructions">Anything Else?</label>
+          <input type="text" id="special-instructions" placeholder="e.g. extra hot, light ice..." />
+        </div>
+        <button class="btn btn-primary btn-block" id="modal-add-btn" onclick="addToCart()">
+          Add to Order
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Cart Section ───────────────────────────────────── -->
+  <section class="section cart-section" id="section-cart" style="display:none">
+    <div class="container">
+      <h2 class="section-title">Your Order</h2>
+      <div id="cart-empty" class="cart-empty">
+        <p>You haven't added anything yet.</p>
+        <button class="btn btn-primary" onclick="showSection('menu')">Browse Menu</button>
+      </div>
+      <div id="cart-content" style="display:none">
+        <div class="cart-items" id="cart-items"></div>
+        <div class="cart-summary">
+          <div class="cart-total">
+            <span id="cart-item-count">0 items</span>
+          </div>
+          <button class="btn btn-primary btn-block" onclick="showSection('checkout')">Schedule Pickup</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Checkout Section ───────────────────────────────── -->
+  <section class="section checkout-section" id="section-checkout" style="display:none">
+    <div class="container">
+      <h2 class="section-title">Schedule Pickup</h2>
+      <form class="checkout-form" id="checkout-form" onsubmit="submitOrder(event)">
+        <div class="form-group">
+          <label for="cust-name">Your Name *</label>
+          <input type="text" id="cust-name" required placeholder="First name" />
+          <span class="form-hint">Who should we call when it's ready?</span>
+        </div>
+        <div class="form-group">
+          <label>Pickup Time *</label>
+          <div class="pickup-toggle">
+            <button type="button" class="pickup-option active" id="pickup-asap" onclick="setPickupMode('asap')">ASAP</button>
+            <button type="button" class="pickup-option" id="pickup-later" onclick="setPickupMode('later')">Choose a Time</button>
+          </div>
+          <input type="time" id="pickup-time-input" style="display:none" />
+          <input type="hidden" id="pickup-time" value="ASAP" />
+        </div>
+        <div class="form-group">
+          <label for="order-notes">Notes</label>
+          <textarea id="order-notes" rows="2" placeholder="Allergies, modifications, etc."></textarea>
+        </div>
+
+        <div class="checkout-summary">
+          <h3>Your Order</h3>
+          <div id="checkout-items"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="place-order-btn">
+          Place Order
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ─── Confirmation Section ───────────────────────────── -->
+  <section class="section confirmation-section" id="section-confirmation" style="display:none">
+    <div class="container confirmation-container">
+      <div class="confirmation-icon">&#10003;</div>
+      <h2>Order Confirmed!</h2>
+      <p class="confirmation-id">Order #<span id="conf-order-id"></span></p>
+      <p class="confirmation-msg">Thanks, <span id="conf-name"></span>! Your order has been received. We'll have it ready at your requested time.</p>
+      <p class="confirmation-pickup" id="conf-pickup"></p>
+      <div class="confirmation-details" id="conf-details"></div>
+      <button class="btn btn-primary" onclick="startNewOrder()">Place Another Order</button>
+    </div>
+  </section>
+
+  <!-- ─── About Section ──────────────────────────────────── -->
+  <section class="section about-section" id="section-about" style="display:none">
+    <div class="container">
+      <h2 class="section-title">About Us</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <p>Welcome to the <strong>Cognition Coffee Bar</strong> &mdash; our in-office cafe for the team. Order ahead, grab your drink, and get back to building.</p>
+          <p>We are intentional about every detail. Our whole milk is 100% Jersey cow from <a href="https://www.valleyfordcheese.com/" target="_blank" rel="noopener">Valley Ford Creamery</a> in Sonoma County. Our matcha is Chinese matcha sourced from <a href="https://www.volitiontea.com/" target="_blank" rel="noopener">Volition Tea</a> in Chicago. Our pour over program rotates an international, local, and domestic roaster each month &mdash; we like to explore some of the best coffee roasters down to some of the best dairy farms in California.</p>
+          <p>Order from your desk, pick up at the bar. Simple as that.</p>
+        </div>
+        <div class="about-info">
+          <div class="info-card">
+            <h4>Location</h4>
+            <p>Second floor, above the lobby</p>
+          </div>
+          <div class="info-card">
+            <h4>Hours</h4>
+            <p>Mon &ndash; Fri: 8:00 AM &ndash; 7:00 PM</p>
+          </div>
+          <div class="info-card">
+            <h4>How It Works</h4>
+            <p>Order online, pick up at the bar when ready. No payment needed!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Footer ─────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Cognition Coffee Bar &middot; Fuel your thinking.</p>
+    </div>
+  </footer>
+
+  <!-- ─── Toast ──────────────────────────────────────────── -->
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

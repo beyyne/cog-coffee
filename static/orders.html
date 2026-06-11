@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Orders Dashboard — Cognition Coffee Bar</title>
+  <link rel="icon" href="devin-icon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest-orders.json" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Orders" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f7f7f8;
+      --surface: #ffffff;
+      --primary: #0a0a0a;
+      --text: #0a0a0a;
+      --text-secondary: #6b6b6b;
+      --border: #e5e5e5;
+      --success: #21C19A;
+      --warning: #f59e0b;
+      --accent: #3969CA;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg); color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .dashboard-header {
+      background: var(--primary); color: #fff;
+      padding: 20px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .dashboard-header h1 { font-size: 1.25rem; font-weight: 600; }
+    .dashboard-header .status {
+      font-size: 0.85rem; opacity: 0.7;
+    }
+    .refresh-btn {
+      background: rgba(255,255,255,0.15); color: #fff;
+      border: none; padding: 8px 16px; border-radius: 8px;
+      font-size: 0.85rem; font-weight: 500; cursor: pointer;
+    }
+    .refresh-btn:hover { background: rgba(255,255,255,0.25); }
+
+    .columns {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding: 20px;
+      min-height: calc(100vh - 72px);
+    }
+    @media (max-width: 768px) {
+      .columns { grid-template-columns: 1fr; }
+    }
+
+    .column {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .column-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .column-header h2 {
+      font-size: 0.95rem; font-weight: 600;
+    }
+    .column-count {
+      background: var(--bg); padding: 2px 10px; border-radius: 50px;
+      font-size: 0.8rem; font-weight: 600;
+    }
+    .column-body {
+      padding: 12px;
+      max-height: calc(100vh - 150px);
+      overflow-y: auto;
+    }
+
+    .order-card {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 10px;
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+    .order-card:hover { border-color: var(--accent); }
+    .order-card-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 8px;
+    }
+    .order-name { font-weight: 700; font-size: 1rem; }
+    .order-time { font-size: 0.8rem; color: var(--text-secondary); }
+    .order-placed-at {
+      font-size: 0.75rem; color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+    .order-pickup {
+      font-size: 0.8rem; font-weight: 600; color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .order-items { list-style: none; }
+    .order-items li {
+      font-size: 0.85rem; padding: 3px 0;
+      color: var(--text-secondary);
+    }
+    .order-items li strong { color: var(--text); font-weight: 500; }
+    .order-notes {
+      margin-top: 8px; padding: 8px 12px;
+      background: var(--surface); border-radius: 6px;
+      font-size: 0.8rem; color: var(--text-secondary);
+      font-style: italic;
+    }
+    .order-actions {
+      margin-top: 12px;
+      display: flex; gap: 8px;
+    }
+    .order-btn {
+      flex: 1; padding: 10px;
+      border: none; border-radius: 8px;
+      font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; transition: opacity 0.2s;
+    }
+    .order-btn:hover { opacity: 0.85; }
+    .btn-prepare {
+      background: var(--warning); color: #fff;
+    }
+    .btn-ready {
+      background: var(--success); color: #fff;
+    }
+    .btn-complete {
+      background: var(--primary); color: #fff;
+    }
+
+    .empty-state {
+      text-align: center; padding: 40px 20px;
+      color: var(--text-secondary); font-size: 0.9rem;
+    }
+
+    .new-order-flash {
+      animation: flashIn 0.5s ease;
+    }
+    @keyframes flashIn {
+      0% { transform: scale(0.95); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    /* ── Nav bar ── */
+    .nav-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex; gap: 0; overflow-x: auto;
+    }
+    .nav-bar a {
+      flex: 1; text-align: center;
+      padding: 12px 16px;
+      font-size: 0.8rem; font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+    }
+    .nav-bar a:hover { color: var(--text); }
+    .nav-bar a.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      font-weight: 600;
+    }
+    /* ── PIN Lock ── */
+    .pin-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 16px;
+    }
+    .pin-overlay h2 { font-size: 1.2rem; font-weight: 600; }
+    .pin-overlay p { font-size: 0.85rem; color: var(--text-secondary); }
+    .pin-input {
+      font-size: 2rem; text-align: center; letter-spacing: 12px;
+      width: 180px; padding: 12px;
+      border: 2px solid var(--border); border-radius: var(--radius);
+      background: var(--surface); color: var(--text);
+      font-family: 'Inter', sans-serif;
+      -webkit-text-security: disc;
+    }
+    .pin-input:focus { outline: none; border-color: var(--primary); }
+    .pin-error { color: #e53e3e; font-size: 0.85rem; display: none; }
+  </style>
+</head>
+<body>
+  <!-- PIN Lock Overlay -->
+  <div class="pin-overlay" id="pin-overlay">
+    <h2>Staff Access</h2>
+    <p>Enter PIN to continue</p>
+    <input type="tel" class="pin-input" id="pin-input" maxlength="4" autocomplete="off" inputmode="numeric" autofocus />
+    <div class="pin-error" id="pin-error">Incorrect PIN</div>
+  </div>
+
+  <div class="nav-bar">
+    <a href="index.html">Order</a>
+    <a href="orders.html" class="active">Orders</a>
+    <a href="tracker.html">Tracker</a>
+  </div>
+  <div class="dashboard-header">
+    <div>
+      <h1>Orders Dashboard</h1>
+      <div class="status" id="status-text">Polling for new orders...</div>
+    </div>
+    <button class="refresh-btn" onclick="loadOrders()">Refresh</button>
+  </div>
+
+  <div class="columns">
+    <div class="column">
+      <div class="column-header">
+        <h2>Incoming</h2>
+        <span class="column-count" id="count-pending">0</span>
+      </div>
+      <div class="column-body" id="col-pending"></div>
+    </div>
+    <div class="column">
+      <div class="column-header">
+        <h2>Preparing</h2>
+        <span class="column-count" id="count-preparing">0</span>
+      </div>
+      <div class="column-body" id="col-preparing"></div>
+    </div>
+    <div class="column">
+      <div class="column-header">
+        <h2>Ready for Pickup</h2>
+        <span class="column-count" id="count-ready">0</span>
+      </div>
+      <div class="column-body" id="col-ready"></div>
+    </div>
+  </div>
+
+  <script>
+    // Use clean origin (strips any embedded credentials from tunnel URLs)
+    const API_BASE = window.location.protocol + '//' + window.location.host;
+
+    let menuCache = {};
+    let orders = [];
+
+    async function init() {
+      // Load menu for name lookups
+      try {
+        const res = await fetch(`${API_BASE}/api/menu-config`);
+        if (res.ok) {
+          const cfg = await res.json();
+          (cfg.menu || []).forEach(i => menuCache[i.id] = i);
+        }
+      } catch {}
+      // Fallback if API didn't load
+      if (!Object.keys(menuCache).length) {
+        try {
+          const res = await fetch('menu-config.json?v=' + Date.now());
+          if (res.ok) {
+            const cfg = await res.json();
+            (cfg.menu || []).forEach(i => menuCache[i.id] = i);
+          }
+        } catch {}
+      }
+      if (!Object.keys(menuCache).length) {
+        [
+          { id: 'coffee-001', name: 'Espresso' },
+          { id: 'coffee-002', name: 'Cortado' },
+          { id: 'coffee-003', name: 'Cappuccino' },
+          { id: 'coffee-004', name: 'Latte' },
+          { id: 'coffee-005', name: 'Mocha' },
+          { id: 'coffee-006', name: 'Americano' },
+          { id: 'coffee-007', name: 'Drip Coffee' },
+          { id: 'matcha-001', name: 'Matcha Latte' },
+          { id: 'tea-001', name: 'Chai Latte' },
+          { id: 'pour_over-001', name: 'Pour Over' },
+        ].forEach(i => menuCache[i.id] = i);
+      }
+      loadOrders();
+      setInterval(loadOrders, 5000);
+    }
+
+    async function loadOrders() {
+      try {
+        const res = await fetch(`${API_BASE}/api/orders/all`);
+        if (!res.ok) throw new Error('not ok');
+        orders = await res.json();
+        document.getElementById('status-text').textContent =
+          `Last updated: ${new Date().toLocaleTimeString()}`;
+      } catch {
+        // Fallback to localStorage
+        try { orders = JSON.parse(localStorage.getItem('cognition_orders') || '[]'); } catch { orders = []; }
+        document.getElementById('status-text').textContent =
+          `Local mode — ${new Date().toLocaleTimeString()}`;
+      }
+      renderOrders();
+    }
+
+    function renderOrders() {
+      const pending = orders.filter(o => o.status === 'pending' || o.status === 'confirmed');
+      const preparing = orders.filter(o => o.status === 'preparing');
+      const ready = orders.filter(o => o.status === 'ready');
+
+      document.getElementById('count-pending').textContent = pending.length;
+      document.getElementById('count-preparing').textContent = preparing.length;
+      document.getElementById('count-ready').textContent = ready.length;
+
+      document.getElementById('col-pending').innerHTML = pending.length
+        ? pending.map(o => orderCard(o, 'pending')).join('')
+        : '<div class="empty-state">No incoming orders</div>';
+
+      document.getElementById('col-preparing').innerHTML = preparing.length
+        ? preparing.map(o => orderCard(o, 'preparing')).join('')
+        : '<div class="empty-state">Nothing being prepared</div>';
+
+      document.getElementById('col-ready').innerHTML = ready.length
+        ? ready.map(o => orderCard(o, 'ready')).join('')
+        : '<div class="empty-state">No orders ready</div>';
+    }
+
+    function formatOrderTime(isoString) {
+      if (!isoString) return '';
+      const d = new Date(isoString);
+      return d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+    }
+
+    function orderCard(order, status) {
+      const items = (order.items || []).map(ci => {
+        const name = menuCache[ci.menu_item_id]?.name || ci.menu_item_id;
+        const size = ci.size ? ` (${ci.size})` : '';
+        const qty = ci.quantity > 1 ? ` x${ci.quantity}` : '';
+        const notes = ci.special_instructions ? ` — ${ci.special_instructions}` : '';
+        return `<li><strong>${name}${size}${qty}</strong>${notes}</li>`;
+      }).join('');
+
+      let actions = '';
+      if (status === 'pending') {
+        actions = `<button class="order-btn btn-prepare" onclick="updateStatus('${order.id}', 'preparing')">Start Preparing</button>`;
+      } else if (status === 'preparing') {
+        actions = `<button class="order-btn btn-ready" onclick="updateStatus('${order.id}', 'ready')">Mark Ready</button>`;
+      } else if (status === 'ready') {
+        actions = `<button class="order-btn btn-complete" onclick="updateStatus('${order.id}', 'completed')">Picked Up</button>`;
+      }
+
+      const pickup = order.pickup_time ? `<div class="order-pickup">Pickup: ${order.pickup_time}</div>` : '';
+      const notes = order.notes ? `<div class="order-notes">${order.notes}</div>` : '';
+      const placedAt = order.created_at ? `<div class="order-placed-at">Placed at ${formatOrderTime(order.created_at)}</div>` : '';
+
+      return `
+        <div class="order-card new-order-flash">
+          <div class="order-card-header">
+            <span class="order-name">${order.customer_name}</span>
+            <span class="order-time">#${order.id.toUpperCase()}</span>
+          </div>
+          ${placedAt}
+          ${pickup}
+          <ul class="order-items">${items}</ul>
+          ${notes}
+          <div class="order-actions">${actions}</div>
+        </div>
+      `;
+    }
+
+    async function updateStatus(orderId, newStatus) {
+      try {
+        const res = await fetch(`${API_BASE}/api/orders/${orderId}/status?status=${newStatus}`, {
+          method: 'PATCH',
+        });
+        if (!res.ok) throw new Error('not ok');
+        loadOrders();
+      } catch (e) {
+        // Fallback: update in localStorage
+        try {
+          const localOrders = JSON.parse(localStorage.getItem('cognition_orders') || '[]');
+          const idx = localOrders.findIndex(o => o.id === orderId);
+          if (idx !== -1) {
+            localOrders[idx].status = newStatus;
+            localStorage.setItem('cognition_orders', JSON.stringify(localOrders));
+          }
+          orders = localOrders;
+          renderOrders();
+        } catch (e2) {
+          console.error('Status update failed:', e2);
+        }
+      }
+    }
+
+    // ── PIN Lock ──
+    const STAFF_PIN = '5503';
+    const PIN_KEY = 'cognition_staff_unlocked';
+
+    function checkPinAccess() {
+      const unlocked = sessionStorage.getItem(PIN_KEY);
+      if (unlocked === 'true') {
+        document.getElementById('pin-overlay').style.display = 'none';
+        return;
+      }
+      const pinInput = document.getElementById('pin-input');
+      pinInput.addEventListener('input', function() {
+        document.getElementById('pin-error').style.display = 'none';
+        if (this.value.length === 4) {
+          if (this.value === STAFF_PIN) {
+            sessionStorage.setItem(PIN_KEY, 'true');
+            document.getElementById('pin-overlay').style.display = 'none';
+          } else {
+            document.getElementById('pin-error').style.display = 'block';
+            this.value = '';
+          }
+        }
+      });
+    }
+
+    checkPinAccess();
+    init();
+  </script>
+</body>
+</html>
