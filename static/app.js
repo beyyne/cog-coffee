@@ -214,9 +214,10 @@ function openItemModal(itemId) {
   document.getElementById('modal-milk').style.display = showMilk ? '' : 'none';
   if (showMilk) renderMilkPills();
 
-  // Syrup — for drinks that take milk (not cortado)
+  // Syrup — for drinks that take milk (not cortado, espresso, drip)
   const isCortado = modalItem.id === 'coffee-002';
-  const showSyrup = (isCoffee || cat === 'matcha' || isChai) && !isCoconutMatcha && !isCortado;
+  const isEspresso = modalItem.id === 'coffee-001';
+  const showSyrup = (isCoffee || cat === 'matcha' || isChai) && !isCoconutMatcha && !isCortado && !isDrip && !isEspresso;
   document.getElementById('modal-syrup').style.display = showSyrup ? '' : 'none';
   if (showSyrup) renderSyrupPills();
 
