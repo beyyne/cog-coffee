@@ -502,7 +502,7 @@ function getFallbackMenu() {
     { id: 'coffee-005', name: 'Mocha', description: 'Espresso with steamed milk and house-made chocolate.', category: 'coffee' },
     { id: 'coffee-006', name: 'Americano', description: 'Espresso with hot water. Bold and smooth.', category: 'coffee' },
     { id: 'coffee-007', name: 'Drip Coffee', description: 'Freshly brewed drip coffee.', category: 'coffee' },
-    { id: 'matcha-001', name: 'Matcha Latte', description: 'Chinese matcha from Spirit Tea, Chicago. Whisked with steamed milk.', category: 'matcha' },
+    { id: 'matcha-001', name: 'Matcha Latte', description: 'Japanese matcha from Spirit Tea, Chicago. Whisked with steamed milk.', category: 'matcha' },
     { id: 'tea-001', name: 'Chai Latte', description: 'House-spiced chai with steamed milk. Available regular or spicy.', category: 'tea' },
     { id: 'pourover-001', name: 'Pour Over', description: 'Rotating single-origin, hand-poured. We rotate an international, local, and domestic roaster each month. Please allow 5 minutes.', category: 'pour_over' },
   ];
