@@ -512,7 +512,7 @@ function getFallbackMenu() {
     { id: 'tea-004', name: 'Malabar', description: 'Herbal tonic from Spirit Tea. Chinese ginger, lemongrass, turmeric, Malabar black peppercorn, licorice root.', category: 'tea' },
     { id: 'tea-005', name: 'White Tea', description: 'Loose leaf white tea. Delicate and light.', category: 'tea' },
     { id: 'tea-006', name: 'Green Tea', description: 'Loose leaf green tea.', category: 'tea' },
-    { id: 'tea-007', name: 'Oolong', description: 'Loose leaf oolong tea.', category: 'tea' },
+    { id: 'tea-007', name: 'Oolong', description: 'Muzha Iron Goddess of Mercy from Spirit Tea. Sugar plum, puffed rice, nectarine.', category: 'tea' },
     { id: 'pour_over-001', name: 'Pour Over', description: 'Rotating single-origin, hand-poured. We rotate an international, local, and domestic roaster each month. Please allow 5 minutes.', category: 'pour_over' },
   ];
 }
