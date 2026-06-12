@@ -509,7 +509,7 @@ function getFallbackMenu() {
     { id: 'matcha-001', name: 'Matcha Latte', description: 'Japanese matcha from Spirit Tea, Chicago. Whisked with steamed milk.', category: 'matcha' },
     { id: 'tea-002', name: 'Hojicha Latte', description: 'Roasted Japanese green tea latte. Smooth and toasty.', category: 'tea' },
     { id: 'tea-003', name: 'Chamomile', description: 'Loose leaf chamomile tea.', category: 'tea' },
-    { id: 'tea-004', name: 'Malabar', description: 'Malabar ginger & turmeric tonic from Spirit Tea. Calm and warming.', category: 'tea' },
+    { id: 'tea-004', name: 'Malabar', description: 'Herbal tonic from Spirit Tea. Chinese ginger, lemongrass, turmeric, Malabar black peppercorn, licorice root.', category: 'tea' },
     { id: 'tea-005', name: 'White Tea', description: 'Loose leaf white tea. Delicate and light.', category: 'tea' },
     { id: 'tea-006', name: 'Green Tea', description: 'Loose leaf green tea.', category: 'tea' },
     { id: 'tea-007', name: 'Oolong', description: 'Loose leaf oolong tea.', category: 'tea' },
