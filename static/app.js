@@ -16,7 +16,8 @@ let VOLITION_TEA = {};
 // Categories that get milk + syrup + decaf options
 const COFFEE_CATS = ['coffee'];
 // Categories that get milk options (no decaf)
-const MILK_CATS = ['coffee', 'matcha', 'tea'];
+const MILK_CATS = ['coffee', 'matcha'];
+const TEA_CATS = ['tea'];
 
 // ── State ──────────────────────────────────────────────────
 let menuItems = [];
@@ -28,6 +29,7 @@ let modalQty = 1;
 let modalMilk = null;
 let modalSyrup = 'None';
 let modalChaiStyle = 'Regular';
+let modalTemp = 'Hot';
 // ── Init ───────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   loadMenu();
@@ -148,6 +150,7 @@ function openItemModal(itemId) {
   modalMilk = null;
   modalSyrup = 'None';
   modalChaiStyle = 'Regular';
+  modalTemp = 'Hot';
 
   document.getElementById('modal-title').textContent = modalItem.name;
   document.getElementById('modal-desc').textContent = modalItem.description;
@@ -159,6 +162,7 @@ function openItemModal(itemId) {
   const isCoffee = COFFEE_CATS.includes(cat);
   const hasMilk = MILK_CATS.includes(cat);
   const isChai = modalItem.id === 'tea-001';
+  const isTea = TEA_CATS.includes(cat);
   const isCoconutMatcha = false;
   const isPourOver = cat === 'pour_over';
 
@@ -191,7 +195,12 @@ function openItemModal(itemId) {
   document.getElementById('modal-chai-style').style.display = isChai ? '' : 'none';
   if (isChai) renderChaiPills();
 
-  // Milk — for coffee, matcha latte, chai, pour over (not coconut matcha)
+  // Temperature — hot or iced for tea items
+  const showTemp = isTea;
+  document.getElementById('modal-temp').style.display = showTemp ? '' : 'none';
+  if (showTemp) renderTempPills();
+
+  // Milk — for coffee, matcha (not tea)
   const showMilk = hasMilk && !isCoconutMatcha;
   document.getElementById('modal-milk').style.display = showMilk ? '' : 'none';
   if (showMilk) renderMilkPills();
@@ -206,6 +215,17 @@ function openItemModal(itemId) {
 
   document.getElementById('item-modal').style.display = '';
   document.body.style.overflow = 'hidden';
+}
+
+function renderTempPills() {
+  document.getElementById('temp-pills').innerHTML = ['Hot', 'Iced'].map(t =>
+    `<button class="option-pill ${t === modalTemp ? 'active' : ''}" onclick="selectTemp('${t}')">${t}</button>`
+  ).join('');
+}
+
+function selectTemp(temp) {
+  modalTemp = temp;
+  renderTempPills();
 }
 
 function renderMilkPills() {
@@ -264,7 +284,9 @@ function addToCart() {
 
   // Build details string
   const details = [];
+  const isTea = TEA_CATS.includes(modalItem.category);
   if (isDecaf) details.push('Decaf');
+  if (isTea) details.push(modalTemp);
   if (isChai) details.push(modalChaiStyle);
   if (modalMilk) details.push(modalMilk + ' milk');
   if (modalSyrup && modalSyrup !== 'None') {

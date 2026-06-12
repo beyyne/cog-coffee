@@ -3,7 +3,7 @@
 
   "roasters": [
     { "name": "Hydrangea Coffee", "location": "Berkeley, CA", "url": "https://hydrangea.coffee/" },
-    { "name": "Hatch Coffee", "location": "Toronto, CA", "url": "https://hatchcoffeeroasters.com/" }
+    { "name": "Hatch Coffee", "location": "Toronto, CA", "url": "https://hatchcrafted.com/" }
   ],
 
   "pour_over": {
