@@ -40,10 +40,10 @@
     { "id": "tea-001", "name": "Chai Latte", "description": "House-spiced chai with steamed milk. Available regular or spicy.", "category": "tea" },
     { "id": "matcha-001", "name": "Matcha Latte", "description": "Japanese matcha from Spirit Tea, Chicago. Whisked with steamed milk.", "category": "matcha" },
     { "id": "tea-002", "name": "Hojicha Latte", "description": "Roasted Japanese green tea latte. Smooth and toasty.", "category": "tea" },
-    { "id": "tea-003", "name": "Chamomile", "description": "Organic chamomile from Spirit Tea. Honey, dried apple, baby's breath. Caffeine-free.", "category": "tea" },
+    { "id": "tea-003", "name": "Chamomile", "description": "Chamomile Blossom from Volition Tea. Applegate Valley, OR. Wild flowers, honey, mint.", "category": "tea" },
     { "id": "tea-004", "name": "Malabar", "description": "Herbal tonic from Spirit Tea. Chinese ginger, lemongrass, turmeric, Malabar black peppercorn, licorice root.", "category": "tea" },
     { "id": "tea-005", "name": "White Tea", "description": "Snow Phoenix from Spirit Tea. Da Ye variety, Dehong, Yunnan. Soft, aromatic, handpicked unopened buds.", "category": "tea" },
-    { "id": "tea-006", "name": "Green Tea", "description": "Kodama Sencha from Spirit Tea. Fukuoka, Japan. Toasted nori, sesame, honeydew.", "category": "tea" },
+    { "id": "tea-006", "name": "Green Tea", "description": "High Mountain Dragon Well from Volition Tea. Pan'an, Zhejiang, China. Sugarcane, chestnut, savory.", "category": "tea" },
     { "id": "tea-007", "name": "Oolong", "description": "Muzha Iron Goddess of Mercy from Spirit Tea. Sugar plum, puffed rice, nectarine.", "category": "tea" },
     { "id": "pour_over-001", "name": "Pour Over", "description": "Rotating single-origin, hand-poured. We rotate an international, local, and domestic roaster each month. Please allow 5 minutes.", "category": "pour_over" }
   ],
