@@ -209,14 +209,14 @@ function openItemModal(itemId) {
   document.getElementById('modal-size').style.display = showSize ? '' : 'none';
   if (showSize) { modalSize = '8oz'; renderSizePills(); }
 
-  // Milk — for coffee, matcha (not tea)
-  const showMilk = hasMilk && !isCoconutMatcha;
+  // Milk — for coffee, matcha (not tea, not espresso)
+  const isEspresso = modalItem.id === 'coffee-001';
+  const isCortado = modalItem.id === 'coffee-002';
+  const showMilk = hasMilk && !isCoconutMatcha && !isEspresso;
   document.getElementById('modal-milk').style.display = showMilk ? '' : 'none';
   if (showMilk) renderMilkPills();
 
   // Syrup — for drinks that take milk (not cortado, espresso, drip)
-  const isCortado = modalItem.id === 'coffee-002';
-  const isEspresso = modalItem.id === 'coffee-001';
   const showSyrup = (isCoffee || cat === 'matcha' || isChai) && !isCoconutMatcha && !isCortado && !isDrip && !isEspresso;
   document.getElementById('modal-syrup').style.display = showSyrup ? '' : 'none';
   if (showSyrup) renderSyrupPills();
