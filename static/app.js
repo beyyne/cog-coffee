@@ -199,8 +199,9 @@ function openItemModal(itemId) {
   document.getElementById('modal-chai-style').style.display = isChai ? '' : 'none';
   if (isChai) renderChaiPills();
 
-  // Temperature — hot or iced for tea items, americano, drip
-  const showTemp = isTea || isAmericano;
+  // Temperature — hot or iced for tea items, americano, latte
+  const isLatte = modalItem.id === 'coffee-004';
+  const showTemp = isTea || isAmericano || isLatte;
   document.getElementById('modal-temp').style.display = showTemp ? '' : 'none';
   if (showTemp) renderTempPills();
 
@@ -217,7 +218,6 @@ function openItemModal(itemId) {
   if (showMilk) renderMilkPills();
 
   // Syrup — for drinks that take milk (not cortado, espresso, drip, latte)
-  const isLatte = modalItem.id === 'coffee-004';
   const showSyrup = (isCoffee || cat === 'matcha' || isChai) && !isCoconutMatcha && !isCortado && !isDrip && !isEspresso && !isLatte;
   document.getElementById('modal-syrup').style.display = showSyrup ? '' : 'none';
   if (showSyrup) renderSyrupPills();
@@ -308,8 +308,9 @@ function addToCart() {
   const details = [];
   const isTea = TEA_CATS.includes(modalItem.category);
   const isAmericano = modalItem.id === 'coffee-006';
+  const isLatte = modalItem.id === 'coffee-004';
   if (isDecaf) details.push('Decaf');
-  if (isTea || isAmericano) details.push(modalTemp);
+  if (isTea || isAmericano || isLatte) details.push(modalTemp);
   if (modalSize) details.push(modalSize);
   if (isChai) details.push(modalChaiStyle);
   if (modalMilk) details.push(modalMilk + ' milk');
@@ -546,7 +547,7 @@ function getFallbackMenu() {
     { id: 'coffee-001', name: 'Espresso', description: 'Rotating coffees, modern espresso.', category: 'coffee' },
     { id: 'coffee-002', name: 'Cortado', description: '4oz. Equal parts espresso and steamed milk.', category: 'coffee' },
     { id: 'coffee-003', name: 'Cappuccino', description: '6oz. Steamed milk and foam over a double espresso.', category: 'coffee' },
-    { id: 'coffee-004', name: 'Latte', description: 'Plain latte.', category: 'coffee' },
+    { id: 'coffee-004', name: 'Latte', description: '12oz.', category: 'coffee' },
     { id: 'coffee-008', name: 'Cherry Cola Tonic', description: 'Espresso with cherry cola tonic. Refreshing and effervescent.', category: 'coffee' },
     { id: 'coffee-005', name: 'Mocha', description: 'Espresso with steamed milk and house-made chocolate.', category: 'coffee' },
     { id: 'coffee-009', name: 'Honey Lavender', description: 'Espresso with steamed milk, honey, and lavender.', category: 'coffee' },

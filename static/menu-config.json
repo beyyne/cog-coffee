@@ -32,7 +32,7 @@
     { "id": "coffee-001", "name": "Espresso", "description": "Rotating coffees, modern espresso.", "category": "coffee" },
     { "id": "coffee-002", "name": "Cortado", "description": "4oz. Equal parts espresso and steamed milk.", "category": "coffee" },
     { "id": "coffee-003", "name": "Cappuccino", "description": "6oz. Steamed milk and foam over a double espresso.", "category": "coffee" },
-    { "id": "coffee-004", "name": "Latte", "description": "Plain latte.", "category": "coffee" },
+    { "id": "coffee-004", "name": "Latte", "description": "12oz.", "category": "coffee" },
     { "id": "coffee-008", "name": "Cherry Cola Tonic", "description": "Espresso with cherry cola tonic. Refreshing and effervescent.", "category": "coffee" },
     { "id": "coffee-005", "name": "Mocha", "description": "Espresso with steamed milk and house-made chocolate.", "category": "coffee" },
     { "id": "coffee-009", "name": "Honey Lavender", "description": "Espresso with steamed milk, honey, and lavender.", "category": "coffee" },
