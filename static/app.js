@@ -495,15 +495,24 @@ function getFallbackCategories() {
 
 function getFallbackMenu() {
   return [
+    { id: 'coffee-006', name: 'Americano', description: 'Espresso with hot water. Bold and smooth.', category: 'coffee' },
+    { id: 'coffee-007', name: 'Drip Coffee', description: 'Freshly brewed drip coffee.', category: 'coffee' },
     { id: 'coffee-001', name: 'Espresso', description: '2oz. Rich, bold shot pulled from our house blend.', category: 'coffee' },
     { id: 'coffee-002', name: 'Cortado', description: '4oz. Equal parts espresso and steamed milk.', category: 'coffee' },
     { id: 'coffee-003', name: 'Cappuccino', description: '6oz. Steamed milk and foam over a double espresso.', category: 'coffee' },
     { id: 'coffee-004', name: 'Latte', description: '12oz. Smooth steamed milk with a double shot of espresso.', category: 'coffee' },
+    { id: 'coffee-008', name: 'Cherry Cola Tonic', description: 'Espresso with cherry cola tonic. Refreshing and effervescent.', category: 'coffee' },
     { id: 'coffee-005', name: 'Mocha', description: 'Espresso with steamed milk and house-made chocolate.', category: 'coffee' },
-    { id: 'coffee-006', name: 'Americano', description: 'Espresso with hot water. Bold and smooth.', category: 'coffee' },
-    { id: 'coffee-007', name: 'Drip Coffee', description: 'Freshly brewed drip coffee.', category: 'coffee' },
-    { id: 'matcha-001', name: 'Matcha Latte', description: 'Japanese matcha from Spirit Tea, Chicago. Whisked with steamed milk.', category: 'matcha' },
+    { id: 'coffee-009', name: 'Honey Lavender', description: 'Espresso with steamed milk, honey, and lavender.', category: 'coffee' },
+    { id: 'coffee-010', name: 'Vanilla', description: 'Espresso with steamed milk and vanilla.', category: 'coffee' },
     { id: 'tea-001', name: 'Chai Latte', description: 'House-spiced chai with steamed milk. Available regular or spicy.', category: 'tea' },
-    { id: 'pourover-001', name: 'Pour Over', description: 'Rotating single-origin, hand-poured. We rotate an international, local, and domestic roaster each month. Please allow 5 minutes.', category: 'pour_over' },
+    { id: 'matcha-001', name: 'Matcha Latte', description: 'Japanese matcha from Spirit Tea, Chicago. Whisked with steamed milk.', category: 'matcha' },
+    { id: 'tea-002', name: 'Hojicha Latte', description: 'Roasted Japanese green tea latte. Smooth and toasty.', category: 'tea' },
+    { id: 'tea-003', name: 'Chamomile', description: 'Loose leaf chamomile tea.', category: 'tea' },
+    { id: 'tea-004', name: 'Malabar', description: 'Loose leaf Malabar tea.', category: 'tea' },
+    { id: 'tea-005', name: 'White Tea', description: 'Loose leaf white tea. Delicate and light.', category: 'tea' },
+    { id: 'tea-006', name: 'Green Tea', description: 'Loose leaf green tea.', category: 'tea' },
+    { id: 'tea-007', name: 'Oolong', description: 'Loose leaf oolong tea.', category: 'tea' },
+    { id: 'pour_over-001', name: 'Pour Over', description: 'Rotating single-origin, hand-poured. We rotate an international, local, and domestic roaster each month. Please allow 5 minutes.', category: 'pour_over' },
   ];
 }
