@@ -29,7 +29,7 @@
   "menu": [
     { "id": "coffee-006", "name": "Americano", "description": "Espresso with hot water.", "category": "coffee" },
     { "id": "coffee-007", "name": "Drip Coffee", "description": "Freshly brewed drip coffee.", "category": "coffee" },
-    { "id": "coffee-001", "name": "Espresso", "description": "2oz. Rich, bold shot pulled from our house blend.", "category": "coffee" },
+    { "id": "coffee-001", "name": "Espresso", "description": "Rotating coffees, modern espresso.", "category": "coffee" },
     { "id": "coffee-002", "name": "Cortado", "description": "4oz. Equal parts espresso and steamed milk.", "category": "coffee" },
     { "id": "coffee-003", "name": "Cappuccino", "description": "6oz. Steamed milk and foam over a double espresso.", "category": "coffee" },
     { "id": "coffee-004", "name": "Latte", "description": "12oz. Smooth steamed milk with a double shot of espresso.", "category": "coffee" },
