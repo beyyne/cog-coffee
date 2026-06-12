@@ -30,6 +30,7 @@ let modalMilk = null;
 let modalSyrup = 'None';
 let modalChaiStyle = 'Regular';
 let modalTemp = 'Hot';
+let modalSize = null;
 // ── Init ───────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   loadMenu();
@@ -151,6 +152,7 @@ function openItemModal(itemId) {
   modalSyrup = 'None';
   modalChaiStyle = 'Regular';
   modalTemp = 'Hot';
+  modalSize = null;
 
   document.getElementById('modal-title').textContent = modalItem.name;
   document.getElementById('modal-desc').textContent = modalItem.description;
@@ -163,6 +165,8 @@ function openItemModal(itemId) {
   const hasMilk = MILK_CATS.includes(cat);
   const isChai = modalItem.id === 'tea-001';
   const isTea = TEA_CATS.includes(cat);
+  const isAmericano = modalItem.id === 'coffee-006';
+  const isDrip = modalItem.id === 'coffee-007';
   const isCoconutMatcha = false;
   const isPourOver = cat === 'pour_over';
 
@@ -195,10 +199,15 @@ function openItemModal(itemId) {
   document.getElementById('modal-chai-style').style.display = isChai ? '' : 'none';
   if (isChai) renderChaiPills();
 
-  // Temperature — hot or iced for tea items
-  const showTemp = isTea;
+  // Temperature — hot or iced for tea items, americano, drip
+  const showTemp = isTea || isAmericano;
   document.getElementById('modal-temp').style.display = showTemp ? '' : 'none';
   if (showTemp) renderTempPills();
+
+  // Size — 8oz or 12oz for americano and drip
+  const showSize = isAmericano || isDrip;
+  document.getElementById('modal-size').style.display = showSize ? '' : 'none';
+  if (showSize) { modalSize = '8oz'; renderSizePills(); }
 
   // Milk — for coffee, matcha (not tea)
   const showMilk = hasMilk && !isCoconutMatcha;
@@ -215,6 +224,17 @@ function openItemModal(itemId) {
 
   document.getElementById('item-modal').style.display = '';
   document.body.style.overflow = 'hidden';
+}
+
+function renderSizePills() {
+  document.getElementById('size-pills').innerHTML = ['8oz', '12oz'].map(s =>
+    `<button class="option-pill ${s === modalSize ? 'active' : ''}" onclick="selectSize('${s}')">${s}</button>`
+  ).join('');
+}
+
+function selectSize(size) {
+  modalSize = size;
+  renderSizePills();
 }
 
 function renderTempPills() {
@@ -285,8 +305,10 @@ function addToCart() {
   // Build details string
   const details = [];
   const isTea = TEA_CATS.includes(modalItem.category);
+  const isAmericano = modalItem.id === 'coffee-006';
   if (isDecaf) details.push('Decaf');
-  if (isTea) details.push(modalTemp);
+  if (isTea || isAmericano) details.push(modalTemp);
+  if (modalSize) details.push(modalSize);
   if (isChai) details.push(modalChaiStyle);
   if (modalMilk) details.push(modalMilk + ' milk');
   if (modalSyrup && modalSyrup !== 'None') {
@@ -517,7 +539,7 @@ function getFallbackCategories() {
 
 function getFallbackMenu() {
   return [
-    { id: 'coffee-006', name: 'Americano', description: 'Espresso with hot water. Bold and smooth.', category: 'coffee' },
+    { id: 'coffee-006', name: 'Americano', description: 'Espresso with hot water.', category: 'coffee' },
     { id: 'coffee-007', name: 'Drip Coffee', description: 'Freshly brewed drip coffee.', category: 'coffee' },
     { id: 'coffee-001', name: 'Espresso', description: '2oz. Rich, bold shot pulled from our house blend.', category: 'coffee' },
     { id: 'coffee-002', name: 'Cortado', description: '4oz. Equal parts espresso and steamed milk.', category: 'coffee' },
